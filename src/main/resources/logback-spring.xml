@@ -29,6 +29,21 @@
             <pattern>[%d{yyyy-MM-dd HH:mm:ss:SSS}] %m%n</pattern>
         </encoder>
     </appender>
+    
+    <appender name="ForDeveloper" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/forDeveloper.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${LOG_PATH}/forDeveloper-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 10MB -->
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%p] [%C %L Line]%n%m %n</pattern>
+        </encoder>
+    </appender>
  
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -53,5 +68,9 @@
     
     <logger name="api-response" level="info">
     	<appender-ref ref="APICALL"/>
+    </logger>
+    
+    <logger name="for-developer" level="info">
+    	<appender-ref ref="ForDeveloper"/>
     </logger>
 </configuration>
